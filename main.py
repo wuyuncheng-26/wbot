@@ -1,4 +1,4 @@
-from json import load
+import json
 from datetime import datetime
 from random import choice
 from time import sleep
@@ -34,12 +34,16 @@ except ImportError:
 
 # 设置部分变量
 knowledge_file = __file__ + "\\..\\knowledge.json"
-chatgpt_first_time = True
-
+with open("api.json","r",encoding="utf-8")as f:#读取配置文件
+      data = json.load(f)
+      chatgpt_first_time = data["chatgpt_first_time"]
+      openai.api_key = data["api"]
+      openai.proxy = data["proxy"]
+print_log("导入配置文件成功！")      
 
 def find_answer(file_path, question):
     with open(file_path, encoding="utf-8") as f:
-        ls = load(f)
+        ls = json.load(f)
         for data in ls:
             if data["question"].lower() in question:
                 return data["answer"]
@@ -105,7 +109,16 @@ def answer(text):
             if (cw != ""):
                 openai.api_base = cw
             openai.api_key = input("      请输入您的 ChatGPT API Key：")
-            chatgpt_first_time = False
+            with open("api.json","r+",encoding="utf-8")as f:
+                data = json.load(f)
+                data["api"] = openai.api_key
+                data["chatgpt_first_time"] = False
+                # 将文件指针移动到文件开头
+                f.seek(0)
+                # 将修改后的内容重新写入文件
+                json.dump(data, f, ensure_ascii=False, indent=4)
+                # 截断文件，删除多余的内容
+                f.truncate()
             cq = input("      请输入您要和 ChatGPT 聊天的内容：")
         else:
             cq = input("请输入您要和 ChatGPT 聊天的内容：")
@@ -121,8 +134,8 @@ def answer(text):
             old_print("      ")
             print_error("发送请求时发生错误！")
             sleep(0.5)
-        print(f"      ChatGPT：{
-              completion["choices"][0]["message"]["content"]}")
+        #print(f"      ChatGPT：{
+            #completion["choices"][0]["message"]["content"]}")
     elif "再见" in text or "拜拜" in text or "退出" in text:
         print(choice(["下次再见！", "期待下次见面！"]))
         sleep(0.5)
