@@ -136,8 +136,7 @@ def answer(text):
             old_print("      ")
             print_error("发送请求时发生错误！")
             sleep(0.5)
-        # print(f"      ChatGPT：{
-            # completion["choices"][0]["message"]["content"]}")
+        print(f"      ChatGPT：{completion['choices'][0]['message']['content']}")
     elif "再见" in text or "拜拜" in text or "退出" in text:
         print(choice(["下次再见！", "期待下次见面！"]))
         sleep(0.5)
