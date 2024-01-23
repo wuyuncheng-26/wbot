@@ -111,7 +111,7 @@ def answer(text):
             if (cw != ""):
                 openai.api_base = cw
             openai.api_key = input("      请输入您的 ChatGPT API Key：")
-            with open("api_config.json", "r+", encoding="utf-8") as f:
+            with open(api_config_file, "r+", encoding="utf-8") as f:
                 data = json.load(f)
                 data["api"] = openai.api_key
                 data["proxy"] = openai.api_base
