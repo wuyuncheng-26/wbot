@@ -1,5 +1,6 @@
 {
-  "chatgpt_first_time": true,
-  "api": "your_api_key",
-  "proxy": "your_proxy_path"
+    "chatgpt_first_time": true,
+    "api": "your_api_key",
+    "proxy": "your_proxy_path",
+    "model": "gpt-3.5-turbo"
 }

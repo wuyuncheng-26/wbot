@@ -41,6 +41,7 @@ with open(api_config_file, "r", encoding="utf-8") as f:
     chatgpt_first_time = data["chatgpt_first_time"]
     openai.api_key = data["api"]
     openai.api_base = data["proxy"]
+    chatgpt_model = data["model"]
 print_log("导入配置文件成功！")
 
 
@@ -111,11 +112,17 @@ def answer(text):
             if (cw != ""):
                 openai.api_base = cw
             openai.api_key = input("      请输入您的 ChatGPT API Key：")
+            cm = input("      请输入您要使用的模型（默认为 gpt-3.5-turbo）：")
+            if (cm != ""):
+                chatgpt_model = cm
+            else:
+                chatgpt_model = "gpt-3.5-turbo"
             with open(api_config_file, "r+", encoding="utf-8") as f:
                 data = json.load(f)
                 data["api"] = openai.api_key
                 data["proxy"] = openai.api_base
                 data["chatgpt_first_time"] = False
+                data["model"] = chatgpt_model
                 f.seek(0)
                 json.dump(data, f, ensure_ascii=False, indent=4)
                 f.truncate()
@@ -125,7 +132,7 @@ def answer(text):
         print("      等待回答中……")
         try:
             completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model=chatgpt_model,
                 messages=[
                     {"role": "user", "content": cq}
                 ]
