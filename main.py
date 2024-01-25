@@ -106,7 +106,7 @@ def answer(text):
         w = input("请输入你要翻译的英文：")
         openwp(f"https://fanyi.baidu.com/translate#en/zh/{w}")
     elif "chatgpt" in text:
-        global chatgpt_first_time
+        global chatgpt_first_time, chatgpt_model
         if chatgpt_first_time:
             cw = input("请输入您的 OpenAI 服务器地址（官方接口请留空）：")
             if (cw != ""):
@@ -137,17 +137,17 @@ def answer(text):
                     {"role": "user", "content": cq}
                 ]
             )
+            print(f"      ChatGPT：{completion["choices"][0]["message"]["content"]}")
         except Exception:
             old_print("      ")
             print_error("发送请求时发生错误！")
             sleep(0.5)
-        print(f"      ChatGPT：{completion["choices"][0]["message"]["content"]}")
     elif "再见" in text or "拜拜" in text or "退出" in text:
         print(choice(["下次再见！", "期待下次见面！"]))
         sleep(0.5)
         exit()
     else:
-        print("我暂时还不会呢，，你可以在 GitHub 上为我贡献代码哦！")
+        print("我暂时还不会呢，你可以在 GitHub 上为我贡献代码哦！")
 
 print_log("进入主程序成功！")
 old_print("   |=====欢迎使用 wbot 智能聊天机器人！=====|   ")
