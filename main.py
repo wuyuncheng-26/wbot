@@ -36,13 +36,16 @@ knowledge_file = __file__ + "\\..\\knowledge.json"
 api_config_file = __file__ + "\\..\\api_config.json"
 
 # 读取配置文件
-with open(api_config_file, "r", encoding="utf-8") as f:
-    data = json.load(f)
-    chatgpt_first_time = data["chatgpt_first_time"]
-    openai.api_key = data["api"]
-    openai.api_base = data["proxy"]
-    chatgpt_model = data["model"]
-print_log("导入配置文件成功！")
+try:
+    with open(api_config_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        chatgpt_first_time = data["chatgpt_first_time"]
+        openai.api_key = data["api"]
+        openai.api_base = data["proxy"]
+        chatgpt_model = data["model"]
+    print_log("导入配置文件成功！")
+except Exception:
+    print_error("导入配置文件失败！")
 
 # 调用知识库函数
 def find_answer(file_path, question):
