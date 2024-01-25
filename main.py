@@ -44,7 +44,7 @@ with open(api_config_file, "r", encoding="utf-8") as f:
     chatgpt_model = data["model"]
 print_log("导入配置文件成功！")
 
-
+# 调用知识库函数
 def find_answer(file_path, question):
     with open(file_path, encoding="utf-8") as f:
         ls = json.load(f)
@@ -53,6 +53,7 @@ def find_answer(file_path, question):
                 return data["answer"]
     return "我暂时还不知道呢，你可以在 GitHub 上为我贡献代码哦！"
 
+# 响应函数
 def answer(text):
     old_print("wbot：", end="")
     if "你好" in text:
@@ -149,6 +150,7 @@ def answer(text):
     else:
         print("我暂时还不会呢，你可以在 GitHub 上为我贡献代码哦！")
 
+# 主程序
 print_log("进入主程序成功！")
 old_print("   |=====欢迎使用 wbot 智能聊天机器人！=====|   ")
 while True:
