@@ -13,7 +13,6 @@ def print(*args):
             sleep(0.05)
     old_print()
 
-
 # 输出错误信息
 def print_error(string):
     old_print(f"\033[1;30;41m[error] {string}\033[0m")
@@ -32,8 +31,8 @@ except ImportError:
     exit()
 
 # 设置部分变量
-knowledge_file = __file__ + "\\..\\knowledge.json"
-api_config_file = __file__ + "\\..\\api_config.json"
+knowledge_file = __file__ + r"\..\knowledge.json"
+api_config_file = __file__ + r"\..\api_config.json"
 
 # 读取配置文件
 try:
