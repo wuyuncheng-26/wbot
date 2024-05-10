@@ -140,7 +140,7 @@ def answer(text):
                     {"role": "user", "content": cq}
                 ]
             )
-            print(f"      ChatGPT：{completion["choices"][0]["message"]["content"]}")
+            print(f"      ChatGPT：{completion["choices"][0]["message"]["content"]}") # type: ignore
         except Exception:
             old_print("      ")
             print_error("发送请求时发生错误！")
